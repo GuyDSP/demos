@@ -1,7 +1,17 @@
-name: twiinit-demos
+name: cpu-demos
 channels:
   - conda-forge
 dependencies:
   - cosapp
-  - cosapp_lab
-  - jupyterlab
+  - numpy
+  - plotly<6.0.0
+  - pytest
+  - pyoccad
+  - pythreejs
+  - joblib
+  - scikit-learn
+  - pre-commit
+  - ipywidgets
+  - nbconvert
+  - pythonocc-core<7.9.0
+  - ipykernel
