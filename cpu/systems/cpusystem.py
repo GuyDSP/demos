@@ -23,7 +23,7 @@ class CPUSystem(System):
 
         # connections between children
         self.connect(self.fan.fl_out, self.exchanger.fl_in)
-        self.connect(self.controler.outwards, self.fan.inwards, ["tension"])
+        self.connect(self.controler.outwards, self.fan.inwards, ["tension_percent"])
         self.connect(self.exchanger.outwards, self.cpu.inwards, ["heat_flow"])
 
         # design methods

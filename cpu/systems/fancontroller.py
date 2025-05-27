@@ -18,15 +18,20 @@ class FanController(System):
         )
         self.add_inward("low_tension", 0.0, unit="V", desc="Output low tension")
         self.add_inward("medium_tension", 6.0, unit="V", desc="Output medium tension")
+        self.add_inward("high_tension", 12.0, unit="V", desc="Output high tension")
         self.add_inward("max_tension", 12.0, unit="V", desc="Output max tension")
 
         # outputs
         self.add_outward("tension", 0.0, unit="V", desc="Output tension")
+        self.add_outward("tension_percent", 0.0, unit="", desc="Output tension percentage")
 
     def compute(self):
+
         if self.T_cpu <= self.low_threshold:
             self.tension = self.low_tension
         elif self.T_cpu <= self.high_threshold:
             self.tension = self.medium_tension
         else:
-            self.tension = self.max_tension
+            self.tension = self.high_tension
+
+        self.tension_percent = self.tension / self.max_tension

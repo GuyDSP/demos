@@ -12,16 +12,19 @@ class Fan(System):
     def setup(self):
         # inputs
         self.add_inward("T_air", 40.0, unit="degC", desc="Air temperature")
-        self.add_inward("tension", 0.0, unit="V", desc="Input tension")
-        self.add_inward("design_tension", 12.0, unit="V", desc="Fan input tension at design point")
-        self.add_inward("mass_flow_max", 1.0, unit="g/s", desc="Maximum mass flow")
+        self.add_inward("tension_percent", 0.0, unit="", desc="Input tension percentage")
+        self.add_inward("max_fan_speed", 6000.0, unit="rpm", desc="maximum fan speed")
+        self.add_inward("mass_flow_max", 1.0, unit="g/(s/rpm)", desc="Maximum mass flow")
         self.add_inward("mass_flow_scalar", 1.0, unit="", desc="Percentage of mass flow available")
+        self.add_inward("fan_speed_scalar", 1.0, unit="", desc="Percentage of fan speed available")
+
+        # outwards
+        self.add_outward("fan_speed", 0.0, unit="rpm", desc="Fan speed")
 
         # outputs
         self.add_output(FluidPort, "fl_out")
 
     def compute(self):
-        self.fl_out.mass_flow = (
-            self.mass_flow_scalar * self.mass_flow_max * self.tension / self.design_tension
-        )
         self.fl_out.T = self.T_air
+        self.fan_speed = self.fan_speed_scalar * self.max_fan_speed * self.tension_percent
+        self.fl_out.mass_flow = self.mass_flow_scalar * self.mass_flow_max * self.fan_speed
